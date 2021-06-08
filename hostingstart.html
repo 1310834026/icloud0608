@@ -1,0 +1,76 @@
+﻿<html class="translated-ltr" style="
+   background-repeat:no-repeat;background-size:cover;background-image: url( ' https://im.nutc.edu.tw/ezfiles/78/1078/img/1435/qqnice.jpg');
+"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <title>資應四A_Final</title>
+    </head>
+<body style="zoom: 1;">
+<script type="text/javascript">
+    function aImage() {
+        let PredictionKey = '1c3d7975d09a4c12944bbd3b11a4cba5';
+        let aiurl = 'https://southcentralus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/3f83b1fa-9de6-45d4-98e8-07a31c3a2555/classify/iterations/Iteration1/url';
+        if (!PredictionKey) { throw new Error('Set your environment variables for your PredictionKey and aiurl.'); }
+        
+        var sourceimageurl = document.getElementById("inputUrl").value;
+        document.querySelector("#Image").src = sourceimageurl;
+
+       
+        $.ajax({
+            url: aiurl + "?",
+
+            beforeSend: function(aObj){
+                aObj.setRequestHeader("Content-Type","application/json");
+                aObj.setRequestHeader("Prediction-Key", PredictionKey);
+            },
+
+            type: "POST",
+
+            data: '{"url": ' + '"' + sourceimageurl + '"}',
+        })
+
+        .done(function(data) {
+            $("#TextArea").val(JSON.stringify(data, null, 2));
+        })
+
+        .fail(function(a, textStatus, errorThrown) {
+            // Display error message.
+            var errorString = (errorThrown === "") ? "Error. " :
+                errorThrown + " (" + a.status + "): ";
+            errorString += (a.responseText === "") ? "" :
+                jQuery.parseJSON(a.responseText).message;
+            alert(errorString);
+        });
+    };
+</script>
+<div id=sidebar style="width:1200px;height:40%">
+<h1 style="
+    margin: 0;
+    padding: 15px 0;
+    color: #600030;
+"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cloud Computing109-2</font></font></h1>
+<h2 style="
+    margin: 0;
+    padding: 15px 0;
+    color: 28004D;
+"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">王冠松 廖華偉 呂哲嶙<br>Final</font></font></h2>
+<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+圖片URL： 
+</font></font><input type="text" name="inputUrl" id="inputUrl" value="https://i.epochtimes.com/assets/uploads/2019/10/b1c41284cb6f6d268bfd7845706e4564-600x400.jpg">
+<button onclick="aImage()"><font style="vertical-align: inherit;"><font style="">Start</font></font></button>
+<br><br>
+
+
+    <div id="ImageDiv" style="width:420px; display:table-cell;" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        圖片:
+        </font></font><br>
+        <img id="Image" width="120px" src="https://i.ytimg.com/vi/CcL_S-AiYX8/maxresdefault.jpg">
+    </div></div>
+    <div id="body" style="width:600px; height:60%;display:table-cell;" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        API
+        </font></font><br><br>
+        <textarea id="TextArea" class="UIInput" style="width:580px; height:400px;"></textarea>
+    </div>
+    
+
+
+</body></html>
